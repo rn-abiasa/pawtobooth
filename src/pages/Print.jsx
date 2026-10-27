@@ -12,7 +12,7 @@ export default function Print() {
   const nav = useNavigate();
   const { photos, frame, bw, strip, setStrip } = usePaw();
   const [done, setDone] = useState(false);
-  usePageTitle("Mencetak strip… · Pawtobooth");
+  usePageTitle("Printing your strip… · Pawtobooth");
 
   useEffect(() => {
     if (!photos.length) return;
@@ -34,7 +34,7 @@ export default function Print() {
         <div className="sketch relative bg-booth px-4 pb-5 pt-4 text-center shadow-[5px_5px_0_#2A2A2A]">
           <CatSvg className="absolute -top-[4.4rem] right-5 w-24" tuxedo />
           <p className="font-hand text-3xl font-bold text-paper" aria-live="polite">
-            {done ? "sudah jadi!" : "sedang dicetak…"}
+            {done ? "all done!" : "printing…"}
           </p>
           <div className="mx-auto mt-3 h-4 w-44 rounded-full border-[3px] border-ink bg-ink" />
         </div>
@@ -47,7 +47,7 @@ export default function Print() {
           {strip && (
             <img
               src={strip}
-              alt="Strip foto kamu"
+              alt="Your photo strip"
               className="eject h-full w-auto max-w-none border-x-[3px] border-b-[3px] border-ink"
               onAnimationEnd={() => setDone(true)}
             />
@@ -63,7 +63,7 @@ export default function Print() {
           onClick={() => nav("/result")}
           className="sketch pop h-16 w-full bg-butter font-hand text-4xl font-bold disabled:opacity-40"
         >
-          ambil strip
+          take your strip
         </button>
       </div>
     </main>

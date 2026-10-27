@@ -20,7 +20,7 @@ export default function StripPreview({ frame, bw, className = "" }) {
       {src && (
         <img
           src={src}
-          alt={`Pratinjau frame ${frame.name}`}
+          alt={`Preview of the ${frame.name} frame`}
           className="h-full w-auto border-[3px] border-ink shadow-[4px_4px_0_#2A2A2A]"
         />
       )}

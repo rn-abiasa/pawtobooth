@@ -69,13 +69,6 @@ body {
 .blink { animation: blink 1.2s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0.2; } }
 
-/* kucing berkedip */
-.eyes { transform-box: fill-box; transform-origin: center; animation: eyes 5s infinite; }
-@keyframes eyes {
-  0%, 93%, 100% { transform: scaleY(1); }
-  96% { transform: scaleY(0.1); }
-}
-
 .curtain { transform-box: fill-box; transform-origin: 50% 0; }
 .booth:hover .curtain,
 .booth:focus-within .curtain { animation: sway 0.9s ease-in-out; }
@@ -96,12 +89,4 @@ body {
 @keyframes hop {
   0%, 100% { transform: translateY(0); }
   40% { transform: translateY(-18px); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
 }

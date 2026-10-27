@@ -16,7 +16,7 @@ export default function Booth() {
         viewBox="0 0 420 440"
         className="absolute inset-0 h-full w-full overflow-visible"
         role="img"
-        aria-label="Photobooth bergaya doodle dengan dua kucing"
+        aria-label="Doodle photobooth with two cats"
       >
         <defs>
           <filter id="wobble" x="-5%" y="-5%" width="110%" height="110%">
