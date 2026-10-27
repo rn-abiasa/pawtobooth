@@ -4,6 +4,7 @@ import { usePaw } from "../state";
 import { FRAMES } from "../lib/frames";
 import { composeStrip } from "../lib/strip";
 import { CatSvg } from "../components/Cat";
+import usePageTitle from "../lib/usePageTitle";
 
 const H = "min(48dvh, 500px)";
 
@@ -11,6 +12,7 @@ export default function Print() {
   const nav = useNavigate();
   const { photos, frame, bw, strip, setStrip } = usePaw();
   const [done, setDone] = useState(false);
+  usePageTitle("Mencetak strip… · Pawtobooth");
 
   useEffect(() => {
     if (!photos.length) return;

@@ -101,7 +101,7 @@ function paintBg(ctx, f, g, date) {
       text(ctx, label, x + w / 2, by + 26, `700 17px ${SERIF}`, RED, "center");
       text(ctx, val, x + w / 2, by + 64, `700 ${size}px ${SERIF}`, RED, "center");
     };
-    box(bx, 240, "TANGGAL", date, 32);
+    box(bx, 240, "DATE", date, 32);
     box(bx + 240, 120, "ROW", "01", 36);
     box(bx + 360, 128, "SEAT", "04", 36);
   } else if (f.kind === "boarding") {
@@ -232,7 +232,7 @@ async function render(frame, bw, imgs) {
   c.width = W;
   c.height = g.H;
   const ctx = c.getContext("2d");
-  const date = new Date().toLocaleDateString("id-ID", {
+  const date = new Date().toLocaleDateString("en-US", {
     day: "2-digit",
     month: "short",
     year: "numeric",

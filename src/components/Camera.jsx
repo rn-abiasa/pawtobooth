@@ -46,7 +46,7 @@ export default function Camera({ onDone, onCancel }) {
         setReady(true);
       })
       .catch(() =>
-        setError("Kamera tidak bisa dibuka. Izinkan akses kamera di browser, atau pakai upload foto."),
+        setError("Camera can't be opened. Allow camera access in your browser, or upload photos instead."),
       );
 
     return () => {
@@ -87,7 +87,7 @@ export default function Camera({ onDone, onCancel }) {
       })
       .catch(() => {
         if (dead) return;
-        setBgNote("Latar belum bisa dimuat. Periksa koneksi internet, lalu coba lagi.");
+        setBgNote("Couldn't load the backgrounds. Check your internet connection and try again.");
         setBg("none");
       });
 
@@ -154,9 +154,9 @@ export default function Camera({ onDone, onCancel }) {
     <div className="fixed inset-0 z-50 flex flex-col items-center gap-4 overflow-y-auto bg-wall px-4 py-5">
       <div className="flex w-full max-w-lg items-center justify-between font-hand text-2xl font-bold">
         <button type="button" onClick={onCancel} className="min-h-11 px-1">
-          ← batal
+          ← cancel
         </button>
-        <span>foto {Math.min(shots + 1, 4)}/4</span>
+        <span>photo {Math.min(shots + 1, 4)}/4</span>
       </div>
 
       <div className="sketch pop relative aspect-[4/3] w-full max-w-lg overflow-hidden bg-ink">
@@ -175,7 +175,7 @@ export default function Camera({ onDone, onCancel }) {
         />
         {loadingBg && (
           <p role="status" className="absolute inset-x-0 bottom-2 text-center font-hand text-xl font-bold text-paper drop-shadow-[2px_2px_0_#2A2A2A]">
-            memuat latar…
+            loading background…
           </p>
         )}
         {count && (
@@ -191,7 +191,7 @@ export default function Camera({ onDone, onCancel }) {
 
       {!error && (
         <div className="w-full max-w-lg">
-          <div className="flex gap-2 overflow-x-auto px-1 pb-2" role="group" aria-label="Latar belakang">
+          <div className="flex gap-2 overflow-x-auto px-1 pb-2" role="group" aria-label="Background">
             {BACKGROUNDS.map((b) => (
               <button
                 key={b.id}
@@ -231,7 +231,7 @@ export default function Camera({ onDone, onCancel }) {
             onClick={onCancel}
             className="sketch pop h-14 bg-butter font-hand text-3xl font-bold"
           >
-            kembali
+            back
           </button>
         </div>
       ) : (
@@ -241,7 +241,7 @@ export default function Camera({ onDone, onCancel }) {
           onClick={start}
           className="sketch pop h-16 w-full max-w-lg bg-butter font-hand text-4xl font-bold disabled:opacity-50"
         >
-          {busy ? "senyum…" : "mulai foto"}
+          {busy ? "smile…" : "start shooting"}
         </button>
       )}
     </div>

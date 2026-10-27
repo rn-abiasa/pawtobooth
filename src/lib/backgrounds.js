@@ -1,10 +1,10 @@
 // Latar tirai digambar lewat canvas, tanpa aset gambar
 export const BACKGROUNDS = [
-  { id: "none", name: "asli", swatch: "#FBF3DC" },
-  { id: "biru", name: "tirai biru", swatch: "#3B76B8", colors: ["#1B3D66", "#3B76B8"] },
-  { id: "merah", name: "tirai merah", swatch: "#B3293A", colors: ["#5E0F1A", "#B3293A"] },
-  { id: "krim", name: "tirai krim", swatch: "#F2E5BF", colors: ["#CDB98A", "#F2E5BF"] },
-  { id: "pink", name: "tirai pink", swatch: "#F9C6D3", colors: ["#E88FA5", "#F9C6D3"] },
+  { id: "none", name: "original", swatch: "#FBF3DC" },
+  { id: "biru", name: "blue curtain", swatch: "#3B76B8", colors: ["#1B3D66", "#3B76B8"] },
+  { id: "merah", name: "red curtain", swatch: "#B3293A", colors: ["#5E0F1A", "#B3293A"] },
+  { id: "krim", name: "cream curtain", swatch: "#F2E5BF", colors: ["#CDB98A", "#F2E5BF"] },
+  { id: "pink", name: "pink curtain", swatch: "#F9C6D3", colors: ["#E88FA5", "#F9C6D3"] },
 ];
 
 const cache = new Map();

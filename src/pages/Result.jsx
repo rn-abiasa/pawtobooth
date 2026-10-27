@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { usePaw } from "../state";
+import usePageTitle from "../lib/usePageTitle";
 
 export default function Result() {
   const nav = useNavigate();
   const { strip, reset } = usePaw();
+  usePageTitle("Strip fotomu sudah jadi · Pawtobooth");
   const [note, setNote] = useState("");
 
   if (!strip) return <Navigate to="/" replace />;

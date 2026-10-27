@@ -2,19 +2,59 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <title>Pawtobooth – Photobooth Online Gratis dengan Kucing Lucu</title>
+    <meta
+      name="description"
+      content="Foto strip ala photobooth langsung dari browser. Pilih frame lucu, ambil 4 foto dengan kamera atau upload, lalu download dan bagikan. Gratis, tanpa akun, foto tidak disimpan."
+    />
+    <meta
+      name="keywords"
+      content="photobooth online, photobooth gratis, foto strip, photo strip, photobooth kucing, photobooth browser, frame foto lucu"
+    />
+    <meta name="author" content="Pawtobooth" />
+    <meta name="robots" content="index, follow" />
+    <meta name="application-name" content="Pawtobooth" />
+    <meta name="apple-mobile-web-app-title" content="Pawtobooth" />
     <meta name="theme-color" content="#F3E6BE" />
+    <meta name="color-scheme" content="light" />
+
+    <!-- Open Graph (WhatsApp, Instagram, Facebook, dll). Ganti og:image dan og:url dengan URL lengkap setelah deploy. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Pawtobooth" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:title" content="Pawtobooth – Photobooth Online Gratis dengan Kucing Lucu" />
+    <meta
+      property="og:description"
+      content="Masuk ke booth, pilih frame, ambil 4 foto, lalu bagikan strip fotomu. Gratis dan tanpa akun."
+    />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Photobooth doodle berwarna oranye dengan dua kucing lucu" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Pawtobooth – Photobooth Online Gratis dengan Kucing Lucu" />
+    <meta
+      name="twitter:description"
+      content="Masuk ke booth, pilih frame, ambil 4 foto, lalu bagikan strip fotomu."
+    />
+    <meta name="twitter:image" content="/og-image.png" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Nunito:wght@600;800&display=swap"
       rel="stylesheet"
     />
-    <title>pawtobooth</title>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>Pawtobooth membutuhkan JavaScript untuk berjalan. Aktifkan JavaScript di browser kamu.</noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

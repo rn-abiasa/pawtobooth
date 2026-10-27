@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#F3E6BE"/>
+  <rect y="540" width="1200" height="90" fill="#F5C842"/>
+  <rect y="536" width="1200" height="8" fill="#2A2A2A"/>
+  <g stroke="#2A2A2A" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
+    <rect x="720" y="110" width="360" height="90" rx="10" fill="#F5C842"/>
+    <rect x="700" y="200" width="400" height="336" rx="14" fill="#E8522B"/>
+    <rect x="730" y="236" width="190" height="150" rx="8" fill="#FBF3DC"/>
+    <rect x="940" y="236" width="130" height="260" fill="#4A8FE0"/>
+    <rect x="740" y="440" width="150" height="20" rx="4" fill="#2A2A2A"/>
+  </g>
+  <text x="900" y="176" text-anchor="middle" font-family="Gaegu, 'Comic Sans MS', cursive" font-weight="700" font-size="64" fill="#2A2A2A">PAWTOBOOTH</text>
+  <text x="80" y="290" font-family="Gaegu, 'Comic Sans MS', cursive" font-weight="700" font-size="130" fill="#2A2A2A">pawtobooth</text>
+  <text x="84" y="370" font-family="Nunito, Arial, sans-serif" font-weight="800" font-size="40" fill="#2A2A2A">Photobooth online gratis</text>
+  <text x="84" y="425" font-family="Nunito, Arial, sans-serif" font-weight="600" font-size="34" fill="#2A2A2A">4 foto, pilih frame, download dan bagikan</text>
+</svg>
