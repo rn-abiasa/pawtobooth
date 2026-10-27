@@ -1,17 +1,30 @@
 import { useEffect, useRef, useState } from "react";
+import { BACKGROUNDS } from "../lib/backgrounds";
+import { composite, getSegmenter } from "../lib/segmenter";
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const CW = 720, CH = 540;
 
 export default function Camera({ onDone, onCancel }) {
   const videoRef = useRef(null);
+  const canvasRef = useRef(null);
   const streamRef = useRef(null);
   const alive = useRef(true);
+  const bgRef = useRef("none");
+  const maskState = useRef({ invert: false });
   const [ready, setReady] = useState(false);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [count, setCount] = useState(null);
   const [flash, setFlash] = useState(false);
   const [shots, setShots] = useState(0);
+  const [bg, setBg] = useState("none");
+  const [segReady, setSegReady] = useState(false);
+  const [bgNote, setBgNote] = useState("");
+
+  bgRef.current = bg;
+  const showCanvas = bg !== "none" && segReady;
+  const loadingBg = bg !== "none" && !segReady;
 
   useEffect(() => {
     alive.current = true;
@@ -42,7 +55,57 @@ export default function Camera({ onDone, onCancel }) {
     };
   }, []);
 
+  // loop segmentasi: aktif hanya saat latar dipilih
+  useEffect(() => {
+    if (!ready || bg === "none") return;
+    let dead = false;
+    let raf = 0;
+    let last = -1;
+
+    getSegmenter()
+      .then((seg) => {
+        if (dead) return;
+        setSegReady(true);
+        const loop = () => {
+          if (dead) return;
+          const v = videoRef.current;
+          const cv = canvasRef.current;
+          if (v && cv && v.readyState >= 2 && v.videoWidth && v.currentTime !== last) {
+            last = v.currentTime;
+            try {
+              seg.segmentForVideo(v, performance.now(), (res) => {
+                const m = res.confidenceMasks[res.confidenceMasks.length - 1];
+                composite(v, m, cv, bgRef.current, maskState.current);
+              });
+            } catch {
+              /* lewati frame yang gagal */
+            }
+          }
+          raf = requestAnimationFrame(loop);
+        };
+        loop();
+      })
+      .catch(() => {
+        if (dead) return;
+        setBgNote("Latar belum bisa dimuat. Periksa koneksi internet, lalu coba lagi.");
+        setBg("none");
+      });
+
+    return () => {
+      dead = true;
+      cancelAnimationFrame(raf);
+    };
+  }, [ready, bg]);
+
+  const pickBg = (id) => {
+    setBgNote("");
+    setBg(id);
+  };
+
   const snap = () => {
+    if (bgRef.current !== "none" && canvasRef.current && segReady) {
+      return canvasRef.current.toDataURL("image/jpeg", 0.92); // sudah dicerminkan
+    }
     const v = videoRef.current;
     const r = 4 / 3;
     let sw = v.videoWidth, sh = v.videoHeight, sx = 0, sy = 0;
@@ -102,8 +165,19 @@ export default function Camera({ onDone, onCancel }) {
           autoPlay
           playsInline
           muted
-          className="h-full w-full -scale-x-100 object-cover"
+          className={`h-full w-full -scale-x-100 object-cover ${showCanvas ? "opacity-0" : ""}`}
         />
+        <canvas
+          ref={canvasRef}
+          width={CW}
+          height={CH}
+          className={`absolute inset-0 h-full w-full ${showCanvas ? "" : "hidden"}`}
+        />
+        {loadingBg && (
+          <p role="status" className="absolute inset-x-0 bottom-2 text-center font-hand text-xl font-bold text-paper drop-shadow-[2px_2px_0_#2A2A2A]">
+            memuat latar…
+          </p>
+        )}
         {count && (
           <div
             aria-live="assertive"
@@ -114,6 +188,31 @@ export default function Camera({ onDone, onCancel }) {
         )}
         {flash && <div className="absolute inset-0 bg-white" />}
       </div>
+
+      {!error && (
+        <div className="w-full max-w-lg">
+          <div className="flex gap-2 overflow-x-auto px-1 pb-2" role="group" aria-label="Latar belakang">
+            {BACKGROUNDS.map((b) => (
+              <button
+                key={b.id}
+                type="button"
+                aria-pressed={bg === b.id}
+                disabled={busy}
+                onClick={() => pickBg(b.id)}
+                className={`sketch pop flex h-11 shrink-0 items-center gap-2 px-3 font-hand text-xl font-bold disabled:opacity-50 ${bg === b.id ? "bg-butter" : "bg-paper"}`}
+              >
+                <span className="h-4 w-4 rounded-full border-2 border-ink" style={{ background: b.swatch }} />
+                {b.name}
+              </button>
+            ))}
+          </div>
+          {bgNote && (
+            <p role="alert" className="mt-1 text-center text-sm text-booth">
+              {bgNote}
+            </p>
+          )}
+        </div>
+      )}
 
       <div className="flex gap-2" aria-hidden="true">
         {[0, 1, 2, 3].map((i) => (
@@ -138,7 +237,7 @@ export default function Camera({ onDone, onCancel }) {
       ) : (
         <button
           type="button"
-          disabled={!ready || busy}
+          disabled={!ready || busy || loadingBg}
           onClick={start}
           className="sketch pop h-16 w-full max-w-lg bg-butter font-hand text-4xl font-bold disabled:opacity-50"
         >
