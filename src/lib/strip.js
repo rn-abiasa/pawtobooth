@@ -187,16 +187,16 @@ function paintFoot(ctx, f, g, date) {
   }
 }
 
-function drawPhoto(ctx, img, c, bw) {
+function drawPhoto(ctx, img, c, bw, pos = { x: 50, y: 50 }) {
   const r = c.w / c.h;
   let sw = img.width, sh = img.height, sx = 0, sy = 0;
   if (sw / sh > r) {
     const w = sh * r;
-    sx = (sw - w) / 2;
+    sx = ((sw - w) * pos.x) / 100;
     sw = w;
   } else {
     const h = sw / r;
-    sy = (sh - h) / 2;
+    sy = ((sh - h) * pos.y) / 100;
     sh = h;
   }
   ctx.drawImage(img, sx, sy, sw, sh, c.x, c.y, c.w, c.h);
@@ -221,7 +221,7 @@ function placeholder(ctx, c, i, bw) {
   paw(ctx, c.x + c.w / 2, c.y + c.h / 2 + 10, 4, "rgba(255,255,255,.55)");
 }
 
-async function render(frame, bw, imgs) {
+async function render(frame, bw, imgs, crops) {
   try {
     await document.fonts.load("700 48px Gaegu");
   } catch {
@@ -241,7 +241,7 @@ async function render(frame, bw, imgs) {
   paintBg(ctx, frame, g, date);
   g.cells.forEach((cell, i) => {
     paintSlot(ctx, frame, cell);
-    if (imgs) drawPhoto(ctx, imgs[i], cell, bw);
+    if (imgs) drawPhoto(ctx, imgs[i], cell, bw, crops?.[i]);
     else placeholder(ctx, cell, i, bw);
     paintBorder(ctx, frame, cell);
   });
@@ -249,9 +249,9 @@ async function render(frame, bw, imgs) {
   return c.toDataURL("image/png");
 }
 
-export async function composeStrip(urls, frame, bw) {
+export async function composeStrip(urls, frame, bw, crops) {
   const imgs = await Promise.all(urls.map(load));
-  return render(frame, bw, imgs);
+  return render(frame, bw, imgs, crops);
 }
 
 export const composePreview = (frame, bw) => render(frame, bw, null);

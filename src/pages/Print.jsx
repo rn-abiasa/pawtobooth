@@ -10,20 +10,20 @@ const H = "min(48dvh, 500px)";
 
 export default function Print() {
   const nav = useNavigate();
-  const { photos, frame, bw, strip, setStrip } = usePaw();
+  const { photos, frame, bw, crops, strip, setStrip } = usePaw();
   const [done, setDone] = useState(false);
   usePageTitle("Printing your strip… · Pawtobooth");
 
   useEffect(() => {
     if (!photos.length) return;
     let dead = false;
-    composeStrip(photos, FRAMES[frame], bw)
+    composeStrip(photos, FRAMES[frame], bw, crops)
       .then((u) => !dead && setStrip(u))
       .catch(() => {});
     return () => {
       dead = true;
     };
-  }, [photos, frame, bw, setStrip]);
+  }, [photos, frame, bw, crops, setStrip]);
 
   if (!photos.length) return <Navigate to="/studio" replace />;
 

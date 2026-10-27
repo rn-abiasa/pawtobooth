@@ -21,7 +21,7 @@ const STEPS = [
 
 export default function Studio() {
   const nav = useNavigate();
-  const { frame, setFrame, bw, setBw, setPhotos } = usePaw();
+  const { frame, setFrame, bw, setBw, begin } = usePaw();
   usePageTitle("Studio – Pick a Frame · Pawtobooth");
   const [sheet, setSheet] = useState(false);
   const [cam, setCam] = useState(false);
@@ -30,8 +30,8 @@ export default function Studio() {
   const f = FRAMES[frame];
 
   const step = (d) => setFrame((frame + d + FRAMES.length) % FRAMES.length);
-  const finish = (list) => {
-    setPhotos(list);
+  const finish = (list, src) => {
+    begin(list, src);
     nav("/print");
   };
   const onFiles = (e) => {
@@ -41,7 +41,7 @@ export default function Studio() {
       setMsg("Pick 4 photos at once.");
       return;
     }
-    finish(files.slice(0, 4).map((x) => URL.createObjectURL(x)));
+    finish(files.slice(0, 4).map((x) => URL.createObjectURL(x)), "upload");
   };
 
   useEffect(() => {
@@ -51,7 +51,7 @@ export default function Studio() {
     return () => window.removeEventListener("keydown", k);
   }, [sheet]);
 
-  if (cam) return <Camera onDone={finish} onCancel={() => setCam(false)} />;
+  if (cam) return <Camera onDone={(list) => finish(list, "camera")} onCancel={() => setCam(false)} />;
 
   return (
     <main className="tiles min-h-dvh px-4 pb-10 pt-4 md:flex md:items-center">
